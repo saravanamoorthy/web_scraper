@@ -68,4 +68,14 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'
+      resource '*',
+      headers: :any,
+      methods: %i[get post options],
+      expose: %w[access-token expiry uid client]
+    end
+  end
 end
